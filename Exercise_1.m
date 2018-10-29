@@ -2,7 +2,7 @@ clc
 
 %% rest
 
-%{
+
 a = [2; 0; 5];
 b = [4; 2; 1];
 c = [0; 1; 0];
@@ -60,11 +60,11 @@ title("ArcPlots")
 axis([0 2*pi -2 2])
 xlabel("Step")
 ylabel("YeahValues")
-%}
+
 
 
 %% bode plots
-%{
+
 fprintf('\n%s\n', "d)")
 
 K = [1, 1.5];
@@ -106,30 +106,34 @@ for i = 1:4
     bode(G);grid on; hold on;
     title("GPT2 d dynamic");
 end
-%}
+
 
 %% my bode
 
-[mag, phase] = mybode(1, [2 1], 0, 1);
+steps = logspace(-2, 2, 1000) * 1i;
 
-disp(mag)
-steps = 0:0.05:10;
-stepSize = size(steps);
+[mag, phase] = mybode(1, [2 1], 0, steps);
+
 figure(1);
-plot(steps, real(phase(1, 1:stepSize(2))));
+subplot(2, 1, 1);
+semilogx(abs(steps), mag);
+subplot(2, 1, 2);
+semilogx(abs(steps), phase);
 
-sin([1 2])
-
-figure(2);
-bode(tf(1, [2, 1]))
 
 function [mag, phase] = mybode(a, b, Tt, w)
-    t1 = tf(a, b);
+    if isempty(Tt)
+        Tt = 0;
+    end
     
-    freqThings = arrayfun(@(x) sin(x * w + Tt), 0:0.05:10);
+    if isempty(w)
+        w = logspace(-2, 2, 1000) * sqrt(-1);
+    end
     
-    mag = 0;
-    phase = freqresp(t1, freqThings);
+    g = polyval(a, w) ./ polyval(b, w) .* exp(-Tt * w);
+    
+    mag = 20 * log10(abs(g));
+    phase = angle(g);
 end
 
 
