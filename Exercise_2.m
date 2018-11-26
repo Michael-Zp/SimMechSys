@@ -1,31 +1,80 @@
-[t1, y1] = pendelum(0.1, 3, 0.5, "ode45");
+[t1, y1, p1] = pendelum(0.1, 3, 0.5, "ode45", 1);
+[t2, y2, p2] = pendelum(0.2, 3, 0.5, "ode45", 2);
+[t3, y3, p3] = pendelum(0.1, 6, 0.5, "ode45", 3);
+[t4, y4, p4] = pendelum(0.1, 3, 1, "ode45", 4);
+[t5, y5, p5] = pendelum(0.1, 3, 0.5, "ode23", 5);
 
-showPlot(t1, y1, 1);
-showPlot(t1, y1, 2);
 
 
-function showPlot(t1, y1, plotNr)
+showPlotWithDiff(t1, y1, t1, y1, 1, p1, p1);
+showPlotWithDiff(t1, y1, t2, y2, 2, p1, p2);
+showPlotWithDiff(t1, y1, t3, y3, 3, p1, p3);
+showPlotWithDiff(t1, y1, t4, y4, 4, p1, p4);
+showPlotWithDiff(t1, y1, t5, y5, 5, p1, p5);
+
+
+function showPlot(t1, y1, plotNr, inpars)
 
     figure(plotNr);
-    subplot(2, 1, 1);
+    subplot(3, 1, 1);
     plot(t1, y1(:,1),'red',...
          t1, y1(:,2),'green',...
          t1, y1(:,3),'blue',...
          t1, y1(:,4),'black');
     legend('d x', 'x', 'd \phi', '\phi');
+    title("Simulation " + inpars.simNr)
+    ylabel("Time");
+    xlabel("m = " + inpars.m + "; C = " + inpars.C + ...
+           "; L0 = " + inpars.L0 + "; fnc = " + inpars.fnc);
     
-    subplot(2, 1, 2);
+    subplot(3, 1, 2);
     plot(y1(:,4), y1(:,2));
+    ylabel("Movement");
+    
+    set(gcf, 'Position', [700 100 500 750]);
+end
+
+function showPlotWithDiff(t1, y1, t2, y2, plotNr, inpars1, inpars2)
+    showPlot(t2, y2, plotNr, inpars2);
+    
+    subplot(3, 1, 3);
+    showDiffPlot(t1, y1, t2, y2, inpars1, inpars2);
+end
+
+function showDiffPlot(t1, y1, t2, y2, inpars1, inpars2)
+
+    diff1 = y1(:,1) - interp1(t2, y2(:,1), t1);
+    diff2 = y1(:,2) - interp1(t2, y2(:,2), t1);
+    diff3 = y1(:,3) - interp1(t2, y2(:,3), t1);
+    diff4 = y1(:,4) - interp1(t2, y2(:,4), t1);
+
+    
+    %figure(plotNr);
+    plot(t1, diff1, 'red', ...
+         t1, diff2, 'green', ...
+         t1, diff3, 'blue', ...
+         t1, diff4, 'black');
+    legend('d x', 'x', 'd \phi', '\phi');
+    title("Differences between simulations " + inpars1.simNr + " & " + inpars2.simNr)
+    ylabel("\Delta Time");
+    xlabel({"m_" + inpars1.simNr + " = " + inpars1.m + " C_" + inpars1.simNr + " = " + inpars1.C + ...
+           "; L0_" + inpars1.simNr + " = " + inpars1.L0 + "; fnc_" + inpars1.simNr + " = " + inpars1.fnc ; ...
+           "m_" + inpars2.simNr + " = " + inpars2.m + " C_" + inpars2.simNr + " = " + inpars2.C + ...
+           "; L0_" + inpars2.simNr + " = " + inpars2.L0 + "; fnc_" + inpars2.simNr + " = " + inpars2.fnc });
 end
 
 
 
 
-
-function [t1, y1] = pendelum(m, C, L0, fnc)
+function [t1, y1, inpars] = pendelum(m, C, L0, fnc, simNr)
     p = setinit(m, C, L0);
     
     [t1, y1] = feval(fnc, @schwinger, [0 5], [0; 1; 0; pi / 4], [], p);
+    inpars.m = m;
+    inpars.C = C;
+    inpars.L0 = L0;
+    inpars.fnc = fnc;
+    inpars.simNr = simNr;
 end
 
 function [dz] = schwinger(~, z, p)
