@@ -1,0 +1,39 @@
+[
+ {
+  "sid":"playtime",
+  "className":"Simulink.BlockDiagram",
+  "icon":"WebViewIcon0",
+  "name":"playtime",
+  "label":"playtime",
+  "parent":"",
+  "inspector":{
+   "params":[
+    "ModelVersion",
+    "LastModifiedDate",
+    "LibraryLinkDisplay",
+    "ModelBrowserVisibility",
+    "Dirty",
+    "Description"
+   ],
+   "values":[
+    "1.18",
+    "Tue Dec 04 15:23:50 2018",
+    "disabled",
+    "off",
+    "off",
+    ""
+   ],
+   "tabs":[
+   ],
+   "tabs_idx":[
+   ]
+  },
+  "viewer":{
+   "jshandler":"webview/handlers/ElementHandler"
+  },
+  "obj_viewer":[
+  ],
+  "finder":[
+  ]
+ }
+]

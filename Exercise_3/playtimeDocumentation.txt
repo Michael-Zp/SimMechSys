@@ -1,0 +1,21 @@
+1 (Deadzone)
+	New blocks: Dynamic Deadzone, Absolute, Sinus, Ramp
+	Comment: Dynamic Deadzone maps the input value 'u' to 0 if its between 'lo' and 'up'. If 'u' exceedes the lower or upper bound it gets damped by the corresponding bound. 
+		 Absolute: Maps any negative value to its positive value.
+		 Sinus: Produces a discrete sinus signal according to the simulation settings.
+		 Ramp: Produces a discrete signal, that has a delay and after that delay can be described by the form y = a * (time - delay).
+
+2 (PID)
+	New blocks: PID, Random Number
+	Comment: PID: Has three modes PID, PI and PD. Controls the output signal to match the input signal, but remove sudden jumps in the signal.
+		 Random Number: Generates random numbers.
+
+3 (Zero-Pole)
+	New blocks: Zero-Pole
+		 Zero-Pole: Is a rational transfer function.
+
+4 (Logic)
+ 	New blocks: AND, Lower/Bigger or equal, STOP
+		 AND: Combines two logic signals (0 = false or non 0 = true).
+		 Lower/Bigger or equal: Checks a condition and either outputs 1 or 0.
+		 STOP: Stops the complete simulation if a 1 is passed to its input.
