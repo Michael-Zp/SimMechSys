@@ -25,16 +25,16 @@ p.C = 1337;       % [N/m] spring constant
 runThis(p, 5)
 
 
-p.F = 1;         % [N] inital force 
+p.F = 1;          % [N] inital force 
 p.m = 10;         % [kg] mass 
-p.D = -3;          % [N sec/m]damping 
+p.D = -3;         % [N sec/m]damping 
 p.C = 100;        % [N/m] spring constant
 runThis(p, 6)
 
 p.F = 10;         % [N] inital force 
-p.m = 5;         % [kg] mass 
+p.m = 5;          % [kg] mass 
 p.D = 5;          % [N sec/m]damping 
-p.C = -2;        % [N/m] spring constant
+p.C = -2;         % [N/m] spring constant
 runThis(p, 7)
 
 function runThis(p, plotNr)
