@@ -30,9 +30,14 @@
  * Output function
  *
  */
-void myOpenLoop_Outputs_wrapper(const real_T *u0,
-			real_T *y0,
-			const real_T *xC)
+void u_t_Outputs_wrapper(const real_T *u0,
+			real_T *speed,
+			const real_T *xC,
+			const real_T *L, const int_T p_width0,
+			const real_T *cm, const int_T p_width1,
+			const real_T *J, const int_T p_width2,
+			const real_T *R, const int_T p_width3,
+			const real_T *D, const int_T p_width4)
 {
 /* %%%-SFUNWIZ_wrapper_Outputs_Changes_BEGIN --- EDIT HERE TO _END */
 /* This sample sets the output equal to the input
@@ -43,7 +48,7 @@ void myOpenLoop_Outputs_wrapper(const real_T *u0,
       y1[0].im = u1[0].im;
  */
 
-y0[0]=xC[0];
+speed[0]=xC[0];
 /* %%%-SFUNWIZ_wrapper_Outputs_Changes_END --- EDIT HERE TO _BEGIN */
 }
 
@@ -51,10 +56,15 @@ y0[0]=xC[0];
  * Derivatives function
  *
  */
-void myOpenLoop_Derivatives_wrapper(const real_T *u0,
-			real_T *y0,
+void u_t_Derivatives_wrapper(const real_T *u0,
+			real_T *speed,
 			real_T *dx,
-			real_T *xC)
+			real_T *xC,
+			const real_T *L, const int_T p_width0,
+			const real_T *cm, const int_T p_width1,
+			const real_T *J, const int_T p_width2,
+			const real_T *R, const int_T p_width3,
+			const real_T *D, const int_T p_width4)
 {
 /* %%%-SFUNWIZ_wrapper_Derivatives_Changes_BEGIN --- EDIT HERE TO _END */
 /*
@@ -62,7 +72,8 @@ void myOpenLoop_Derivatives_wrapper(const real_T *u0,
  *   dx[0] = xC[0];
  */
 
-dx[0] = u0[0];
+dx[0] = (u0[0] - xC[1] * R[0] - xC[0] * cm[0]) / L[0];
+dx[1] = (xC[1] * cm[0] - xC[0] * D[0]) / J[0];
 /* %%%-SFUNWIZ_wrapper_Derivatives_Changes_END --- EDIT HERE TO _BEGIN */
 }
 

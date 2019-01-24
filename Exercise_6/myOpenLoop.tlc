@@ -1,5 +1,5 @@
 %% File : myOpenLoop.tlc
-%% Created : Mon Jan 21 13:07:20 2019
+%% Created : Thu Jan 24 14:02:47 2019
 %%
 %% Description: 
 %%   Simulink Coder wrapper functions interface generated for 
@@ -28,36 +28,17 @@
     extern "C" {
     #endif
 
-    extern void myOpenLoop_Start_wrapper(real_T *xC,
-			const real_T *L, const int_T p_width0,
-			const real_T *cm, const int_T p_width1,
-			const real_T *J, const int_T p_width2,
-			const real_T *D, const int_T p_width3,
-			const real_T *R, const int_T p_width4);
+    extern void myOpenLoop_Start_wrapper(real_T *xC);
 
-    extern void myOpenLoop_Outputs_wrapper(real_T *y0,
-			const real_T *xC,
-			const real_T *L, const int_T p_width0,
-			const real_T *cm, const int_T p_width1,
-			const real_T *J, const int_T p_width2,
-			const real_T *D, const int_T p_width3,
-			const real_T *R, const int_T p_width4);
+    extern void myOpenLoop_Outputs_wrapper(const real_T *u0,
+			real_T *y0,
+			const real_T *xC);
     extern void myOpenLoop_Derivatives_wrapper(const real_T *u0,
 			real_T *y0,
 			real_T *dx,
-			real_T *xC,
-			const real_T *L, const int_T p_width0,
-			const real_T *cm, const int_T p_width1,
-			const real_T *J, const int_T p_width2,
-			const real_T *D, const int_T p_width3,
-			const real_T *R, const int_T p_width4);
+			real_T *xC);
 
-    extern void myOpenLoop_Terminate_wrapper(real_T *xC,
-			const real_T *L, const int_T p_width0,
-			const real_T *cm, const int_T p_width1,
-			const real_T *J, const int_T p_width2,
-			const real_T *D, const int_T p_width3,
-			const real_T *R, const int_T p_width4);
+    extern void myOpenLoop_Terminate_wrapper(real_T *xC);
 
     #ifdef __cplusplus
     }
@@ -87,46 +68,12 @@
 %%
 %function Outputs(block, system) Output
   %%
+  %assign pu0 = LibBlockInputSignalAddr(0, "", "", 0)
   %assign py0 = LibBlockOutputSignalAddr(0, "", "", 0)
-  %assign nelements1 = LibBlockParameterSize(P1)
-  %assign param_width1 = nelements1[0] * nelements1[1]
-  %if (param_width1) > 1
-    %assign pp1 = LibBlockMatrixParameterBaseAddr(P1)
-  %else
-    %assign pp1 = LibBlockParameterAddr(P1, "", "", 0)
-  %endif
-  %assign nelements2 = LibBlockParameterSize(P2)
-  %assign param_width2 = nelements2[0] * nelements2[1]
-  %if (param_width2) > 1
-    %assign pp2 = LibBlockMatrixParameterBaseAddr(P2)
-  %else
-    %assign pp2 = LibBlockParameterAddr(P2, "", "", 0)
-  %endif
-  %assign nelements3 = LibBlockParameterSize(P3)
-  %assign param_width3 = nelements3[0] * nelements3[1]
-  %if (param_width3) > 1
-    %assign pp3 = LibBlockMatrixParameterBaseAddr(P3)
-  %else
-    %assign pp3 = LibBlockParameterAddr(P3, "", "", 0)
-  %endif
-  %assign nelements4 = LibBlockParameterSize(P4)
-  %assign param_width4 = nelements4[0] * nelements4[1]
-  %if (param_width4) > 1
-    %assign pp4 = LibBlockMatrixParameterBaseAddr(P4)
-  %else
-    %assign pp4 = LibBlockParameterAddr(P4, "", "", 0)
-  %endif
-  %assign nelements5 = LibBlockParameterSize(P5)
-  %assign param_width5 = nelements5[0] * nelements5[1]
-  %if (param_width5) > 1
-    %assign pp5 = LibBlockMatrixParameterBaseAddr(P5)
-  %else
-    %assign pp5 = LibBlockParameterAddr(P5, "", "", 0)
-  %endif
   {
     
     real_T *pxc = &%<LibBlockContinuousState("", "", 0)>;
-    myOpenLoop_Outputs_wrapper(%<py0>, pxc, %<pp1>, %<param_width1>, %<pp2>, %<param_width2>, %<pp3>, %<param_width3>, %<pp4>, %<param_width4>, %<pp5>, %<param_width5>);
+    myOpenLoop_Outputs_wrapper(%<pu0>, %<py0>, pxc);
   }
   %%
 %endfunction
@@ -139,46 +86,11 @@
     /* S-Function "myOpenLoop_wrapper" Block: %<Name> */
   %assign pu0 = LibBlockInputSignalAddr(0, "", "", 0)
   %assign py0 = LibBlockOutputSignalAddr(0, "", "", 0)
-  %assign nelements1 = LibBlockParameterSize(P1)
-  %assign param_width1 = nelements1[0] * nelements1[1]
-  %if (param_width1) > 1
-    %assign pp1 = LibBlockMatrixParameterBaseAddr(P1)
-  %else
-    %assign pp1 = LibBlockParameterAddr(P1, "", "", 0)
-  %endif
-  %assign nelements2 = LibBlockParameterSize(P2)
-  %assign param_width2 = nelements2[0] * nelements2[1]
-  %if (param_width2) > 1
-    %assign pp2 = LibBlockMatrixParameterBaseAddr(P2)
-  %else
-    %assign pp2 = LibBlockParameterAddr(P2, "", "", 0)
-  %endif
-  %assign nelements3 = LibBlockParameterSize(P3)
-  %assign param_width3 = nelements3[0] * nelements3[1]
-  %if (param_width3) > 1
-    %assign pp3 = LibBlockMatrixParameterBaseAddr(P3)
-  %else
-    %assign pp3 = LibBlockParameterAddr(P3, "", "", 0)
-  %endif
-  %assign nelements4 = LibBlockParameterSize(P4)
-  %assign param_width4 = nelements4[0] * nelements4[1]
-  %if (param_width4) > 1
-    %assign pp4 = LibBlockMatrixParameterBaseAddr(P4)
-  %else
-    %assign pp4 = LibBlockParameterAddr(P4, "", "", 0)
-  %endif
-  %assign nelements5 = LibBlockParameterSize(P5)
-  %assign param_width5 = nelements5[0] * nelements5[1]
-  %if (param_width5) > 1
-    %assign pp5 = LibBlockMatrixParameterBaseAddr(P5)
-  %else
-    %assign pp5 = LibBlockParameterAddr(P5, "", "", 0)
-  %endif
   {
     
     real_T *pxc = &%<LibBlockContinuousState("", "", 0)>;
     real_T *dx  = &%<LibBlockContinuousStateDerivative("", "", 0)>;
-    myOpenLoop_Derivatives_wrapper(%<pu0>, %<py0>, dx, pxc, %<pp1>, %<param_width1>, %<pp2>, %<param_width2>, %<pp3>, %<param_width3>, %<pp4>, %<param_width4>, %<pp5>, %<param_width5>);
+    myOpenLoop_Derivatives_wrapper(%<pu0>, %<py0>, dx, pxc);
   }
   %%
 %endfunction
